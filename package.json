@@ -1,0 +1,29 @@
+{
+  "name": "vince1",
+  "version": "0.0.1",
+  "description": "vtk.js application",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --progress --colors --mode development",
+    "build:release": "webpack --progress --colors --mode production",
+    "start": "webpack-dev-server --content-base ./dist",
+    "commit": "git cz",
+    "semantic-release": "semantic-release"
+  },
+  "keywords": [
+    "Web",
+    "visualization",
+    "using",
+    "VTK"
+  ],
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "vtk.js": "^7.5.0"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "kw-web-suite": "^6.2.0",
+    "style-loader": "^0.22.1"
+  }
+}
