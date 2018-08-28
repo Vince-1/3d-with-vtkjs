@@ -47,6 +47,9 @@ transverse.imageMapper.setKSlice(30);
 transverse.camera.setViewUp(0,1,0);
 transverse.camera.setPosition(0,0,1);
 
+const lineActor1 =  vtkActor.newInstance();
+const lineActor2 =  vtkActor.newInstance();
+const lineActor3 =  vtkActor.newInstance();
 
 const reader = vtkHttpDataSetReader.newInstance({
     fetchGzip: true,
@@ -222,44 +225,32 @@ function piplineconnect(imageMapper, imageActor, renderer, renderWindow, camera,
             //     [pickedPoints[0][0], pickedPoints[0],[1], zMax]
             // ];
 
-            const points = vtkPoints.newInstance();
-            points.setNumberOfPoints(3);
-            points.setData([
-                pickedPoints[0][0], 0, pickedPoints[0][2],
-                pickedPoints[0][0], yMax, pickedPoints[0][2],
-                0, pickedPoints[0],[1], pickedPoints[0],[2],
-                xMax, pickedPoints[0],[1], pickedPoints[0][2],
-                pickedPoints[0][0], pickedPoints[0][1], 0,
-                pickedPoints[0][0], pickedPoints[0],[1], zMax
-            ]);
+            // const points = vtkPoints.newInstance();
+            // points.setNumberOfPoints(3);
+            // points.setData([
+            //     pickedPoints[0][0], 0, pickedPoints[0][2],
+            //     pickedPoints[0][0], yMax, pickedPoints[0][2],
+            //     0, pickedPoints[0],[1], pickedPoints[0],[2],
+            //     xMax, pickedPoints[0],[1], pickedPoints[0][2],
+            //     pickedPoints[0][0], pickedPoints[0][1], 0,
+            //     pickedPoints[0][0], pickedPoints[0],[1], zMax
+            // ]);
 
-            const pointIdList = [0, 1, 2, 3, 4, 5];
-            const line = vtkLine.newInstance();
-            line.initialize(points.getNumberOfPoints(), pointIdList, points);
+            // const pointIdList = [0, 1, 2, 3, 4, 5];
+            // const line = vtkLine.newInstance();
+            // line.initialize(points.getNumberOfPoints(), pointIdList, points);
 
-            console.log('line',line);
-            // const line = vtkLineSource.newInstance();
-            const lineActor =  vtkActor.newInstance();
-            const lineMapper = vtkMapper.newInstance();
+            // console.log('line',line);
 
-           
 
-            // line.setPoint1(0,0,pickedPoints[0][2]);
-            // line.setPoint2(pickedPoints[0][0],pickedPoints[0][1],pickedPoints[0][2]);
-            lineActor.getProperty().setPointSize(10);
+            line3([pickedPoints[0][0], 0, pickedPoints[0][2]],
+                [pickedPoints[0][0], yMax, pickedPoints[0][2]],lineActor1);
 
-            lineMapper.setInputData(line);
-            lineActor.setMapper(lineMapper);
-            // renderer.addActor(lineActor);
-            // renderWindow.render();
-          
-            coronal.renderer.addActor(lineActor);
-            coronal.renderWindow.render();
-            sagittal.renderer.addActor(lineActor);
-            sagittal.renderWindow.render();
-            transverse.renderer.addActor(lineActor);
-            transverse.renderWindow.render();
+            line3([0, pickedPoints[0][1], pickedPoints[0][2]],
+                [xMax-1, pickedPoints[0][1], pickedPoints[0][2]],lineActor2);
 
+            line3([pickedPoints[0][0], pickedPoints[0][1], 0],
+                [pickedPoints[0][0], pickedPoints[0][1], zMax],lineActor3);
 
             for (let i = 0; i < pickedPoints.length; i++) {
                 const pickedPoint = pickedPoints[i];
@@ -271,6 +262,26 @@ function piplineconnect(imageMapper, imageActor, renderer, renderWindow, camera,
       });
 }
 
+function line3(point1,point2,lineActor){
+    const line = vtkLineSource.newInstance();
+    //const lineActor =  vtkActor.newInstance();
+    const lineMapper = vtkMapper.newInstance();
+    line.setPoint1(point1);
+    line.setPoint2(point2);
+    lineActor.getProperty().setPointSize(10);
 
+    lineMapper.setInputData(line.getOutputData());
+    lineActor.setMapper(lineMapper);
+    lineActor.getProperty().setColor(0.0, 1.0, 1.0);
+    // renderer.addActor(lineActor);
+    // renderWindow.render();
+  
+    coronal.renderer.addActor(lineActor);
+    coronal.renderWindow.render();
+    sagittal.renderer.addActor(lineActor);
+    sagittal.renderWindow.render();
+    transverse.renderer.addActor(lineActor);
+    transverse.renderWindow.render();
+}
 
 global.coronal = coronal;
