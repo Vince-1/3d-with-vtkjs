@@ -65,12 +65,7 @@ function cameraSet(mode,mapper,camera,slice,viewUp,position){
     camera.setPosition(position);
 }
 
-// coronalCamera(30,[0,0,1],[1,0,0]);
-// function coronalCamera(slice,viewUp,position){
-//     coronal.imageMapper.setISlice(slice);
-//     coronal.camera.setViewUp(viewUp);
-//     coronal.camera.setPosition(position);
-// }
+
 
 coronal.imageMapper.setISlice(30);
 coronal.camera.setViewUp(0,0,1);
@@ -114,9 +109,6 @@ reader
             transverse.renderWindow,
             transverse.camera,cid[2]);
         
-        // piplineconnect(coronal,"C");
-        // piplineconnect(sagittal,"S");
-        // piplineconnect(transverse,"T");
     });
 
 const vol = vtkVolume.newInstance();
@@ -152,23 +144,7 @@ function Init(){
         imageActor:imageActor,
         camera:camera
     }
-    // this.renderWindow = renderWindow;
-    // this.renderer = renderer;
-    // this.imageMapper = imageMapper;
-    // this.imageActor = imageActor;
-    // this.camera = camera;
-    // const renderWindow;
-    // const renderer;
-    // const imageMapper;
-    // const imageActor;
-    // const camera;
-    // return {
-    //     renderWindow:vtkRenderWindow.newInstance(),
-    //     renderer:vtkRenderer.newInstance({ background: [0.2, 0.3, 0.4] }),
-    //     imageMapper:vtkImageMapper.newInstance(),
-    //     imageActor:vtkImageSlice.newInstance(),
-    //     camera:vtkCamera.newInstance()
-    // }
+
 
 }
 
